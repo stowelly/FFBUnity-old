@@ -31,6 +31,7 @@ public class FieldHandler : MonoBehaviour
     private ViewObjectList<Player> Players;
     private ViewObjectList<PushbackSquare> PushbackSquares;
     private ViewObjectList<TrackNumber> TrackNumbers;
+    private ViewObjectList<MoveSquare> MoveSquares;
 
     #region MonoBehaviour Methods
 
@@ -92,6 +93,27 @@ public class FieldHandler : MonoBehaviour
             Destroy(t.GameObject);
         });
 
+        MoveSquares = new ViewObjectList<MoveSquare>(t =>
+        {
+            GameObject obj = Instantiate(TrackNumberPrefab);
+         //   t.LabelObject = obj.GetComponentInChildren<TMPro.TextMeshPro>();
+            return obj;
+        },
+        t =>
+        {
+            if (t != null && t.ModelObject.Coordinate != null && t.GameObject != null)
+            {
+                t.GameObject.transform.SetParent(Field.transform);
+                t.GameObject.transform.localPosition = FieldToWorldCoordinates(t.ModelObject.Coordinate.X, t.ModelObject.Coordinate.Y, 10);
+             //   t.ModelObject.LabelObject.SetText(t.ModelObject.Number.ToString());
+            }
+        },
+        t =>
+        {
+            Destroy(t.GameObject);
+        });
+
+
         var players = FFB.Instance.Model.GetPlayers();
         Players.Refresh(players);
 
@@ -111,6 +133,7 @@ public class FieldHandler : MonoBehaviour
         Players.Refresh(FFB.Instance.Model.GetPlayers());
         PushbackSquares.Refresh(FFB.Instance.Model.PushbackSquares.Values);
         TrackNumbers.Refresh(FFB.Instance.Model.TrackNumbers.Values);
+        MoveSquares.Refresh(FFB.Instance.Model.MoveSquares.Values);
 
         var ball = FFB.Instance.Model.Ball;
         if (ball != null && ball.Coordinate != null)

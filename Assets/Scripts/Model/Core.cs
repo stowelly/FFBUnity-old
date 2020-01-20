@@ -16,6 +16,7 @@ namespace Fumbbl.Model
         public Coordinate PassCoordinate { get; internal set; }
         public Dictionary<int, View.PushbackSquare> PushbackSquares;
         public Dictionary<int, View.TrackNumber> TrackNumbers;
+        public Dictionary<int, View.MoveSquare> MoveSquares;
         public List<View.BlockDie> BlockDice;
         public Team TeamAway { get; internal set; }
         public Team TeamHome { get; internal set; }
@@ -40,6 +41,7 @@ namespace Fumbbl.Model
             Ball = new Ball();
             PushbackSquares = new Dictionary<int, View.PushbackSquare>();
             TrackNumbers = new Dictionary<int, View.TrackNumber>();
+            MoveSquares = new Dictionary<int, View.MoveSquare>();
             BlockDice = new List<View.BlockDie>();
             Positions = new Dictionary<string, Position>();
         }
@@ -51,6 +53,7 @@ namespace Fumbbl.Model
             ActingPlayer.Clear();
             PushbackSquares.Clear();
             TrackNumbers.Clear();
+            MoveSquares.Clear();
             BlockDice.Clear();
         }
 
@@ -124,6 +127,18 @@ namespace Fumbbl.Model
             }
         }
 
+        internal void Add(MoveSquare square)
+        {
+            int key = square.coordinate[0] * 100 + square.coordinate[1];
+            if (!MoveSquares.ContainsKey(key))
+            {
+                MoveSquares.Add(key, new View.MoveSquare(square));
+            }
+            else
+            {
+                MoveSquares[key].Refresh(new View.MoveSquare(square));
+            }
+        }
         internal void ApplyChange(Ffb.Dto.ModelChange change)
         {
             ModelUpdater<Ffb.Dto.ModelChange> updater = ModelChangeFactory.GetReflectedInstance(change.GetType());
@@ -193,6 +208,11 @@ namespace Fumbbl.Model
         {
             int key = square.coordinate[0] * 100 + square.coordinate[1];
             TrackNumbers.Remove(key);
+        }
+        internal void RemoveMoveSquare(MoveSquare square)
+        {
+            int key = square.coordinate[0] * 100 + square.coordinate[1];
+            MoveSquares.Remove(key);
         }
     }
 }

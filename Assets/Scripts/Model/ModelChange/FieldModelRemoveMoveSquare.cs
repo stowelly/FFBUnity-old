@@ -6,7 +6,7 @@
 
         public override void Apply(Ffb.Dto.ModelChanges.FieldModelRemoveMoveSquare change)
         {
-            FFB.Instance.Model.RemoveTrackNumber(change.modelChangeValue);
+            FFB.Instance.Model.RemoveMoveSquare(change.modelChangeValue);
         }
     }
 }
