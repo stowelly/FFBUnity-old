@@ -22,6 +22,7 @@ public class FieldHandler : MonoBehaviour
     public GameObject ScrollTextPrefab;
     public GameObject SquareOverlay;
     public GameObject TrackNumberPrefab;
+    public GameObject MoveSquarePrefab;
     public TMPro.TextMeshProUGUI AwayTeamText;
     public TMPro.TextMeshProUGUI HomeTeamText;
 
@@ -95,8 +96,8 @@ public class FieldHandler : MonoBehaviour
 
         MoveSquares = new ViewObjectList<MoveSquare>(t =>
         {
-            GameObject obj = Instantiate(TrackNumberPrefab);
-         //   t.LabelObject = obj.GetComponentInChildren<TMPro.TextMeshPro>();
+            GameObject obj = Instantiate(MoveSquarePrefab);
+            t.LabelObject = obj.GetComponentInChildren<TMPro.TextMeshPro>();
             return obj;
         },
         t =>
@@ -105,7 +106,16 @@ public class FieldHandler : MonoBehaviour
             {
                 t.GameObject.transform.SetParent(Field.transform);
                 t.GameObject.transform.localPosition = FieldToWorldCoordinates(t.ModelObject.Coordinate.X, t.ModelObject.Coordinate.Y, 10);
-             //   t.ModelObject.LabelObject.SetText(t.ModelObject.Number.ToString());
+                int dodgeRoll = t.ModelObject.minimumRollDodge;
+                int gfiRoll = t.ModelObject.minimumRollGoForIt;
+                if(dodgeRoll > 0 | gfiRoll > 0)
+                {
+                    t.ModelObject.LabelObject.SetText($"{dodgeRoll}/{gfiRoll}");
+                }
+                else
+                {
+                    t.ModelObject.LabelObject.SetText("");
+                }
             }
         },
         t =>

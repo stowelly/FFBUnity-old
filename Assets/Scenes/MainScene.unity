@@ -565,6 +565,8 @@ MonoBehaviour:
   SquareOverlay: {fileID: 1807401716}
   TrackNumberPrefab: {fileID: 4696924523373969304, guid: 4d973e2670169004bb56c5d9d016200e,
     type: 3}
+  MoveSquarePrefab: {fileID: 4696924523373969304, guid: afc3e6296c4d5d14daffbbdcab3a251e,
+    type: 3}
   AwayTeamText: {fileID: 968567042}
   HomeTeamText: {fileID: 697949508}
 --- !u!61 &202713964

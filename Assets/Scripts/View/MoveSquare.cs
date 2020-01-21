@@ -1,4 +1,5 @@
-﻿using Fumbbl.Model.Types;
+﻿using TMPro;
+using Fumbbl.Model.Types;
 
 namespace Fumbbl.View
 {
@@ -7,6 +8,7 @@ namespace Fumbbl.View
         public Coordinate Coordinate { get; set; }
         public int minimumRollDodge;
         public int minimumRollGoForIt;
+        public TextMeshPro LabelObject { get; internal set; }
 
         public object Key => Coordinate.X * 100 + Coordinate.Y;
 
