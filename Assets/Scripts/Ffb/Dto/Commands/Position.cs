@@ -25,6 +25,6 @@
         public FFBEnumeration[] skillCategoriesNormal;
         public FFBEnumeration[] skillCategoriesDouble;
         public FFBEnumeration[] skillArray;
-        public int[] skillValues;
+        public string[] skillValues;
     }
 }
